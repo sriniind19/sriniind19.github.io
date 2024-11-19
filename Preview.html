@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salesforce CPQ Steps</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        h1 {
+            text-align: center;
+            color: #0056b3;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: #0056b3;
+            color: #fff;
+            font-weight: bold;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        tr:hover {
+            background-color: #d0e8ff;
+        }
+        td {
+            vertical-align: top;
+        }
+    </style>
+</head>
+<body>
+    <h1>Steps to Create Salesforce CPQ Rule</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Step</th>
+                <th>Action</th>
+                <th>Details</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1. Create Summary Variable</td>
+                <td>Count occurrences of <code>CAP136</code> across quote lines.</td>
+                <td>
+                    - Navigate to <strong>Summary Variables</strong>.<br>
+                    - <strong>Variable Name</strong>: Count_CAP136<br>
+                    - <strong>Target Object</strong>: Quote Line<br>
+                    - <strong>Aggregate Function</strong>: Count<br>
+                    - <strong>Filter Field</strong>: Product Code<br>
+                    - <strong>Operator</strong>: Equals<br>
+                    - <strong>Filter Value</strong>: CAP136
+                </td>
+            </tr>
+            <tr>
+                <td>2. Create Price Rule</td>
+                <td>Create a Price Rule named <code>Update Product Notes for VN0547</code>.</td>
+                <td>
+                    - <strong>Active</strong>: Checked<br>
+                    - <strong>Evaluation Scope</strong>: Calculator<br>
+                    - <strong>Conditions Met</strong>: All
+                </td>
+            </tr>
+            <tr>
+                <td>3. Add Condition 1</td>
+                <td>Check if Product Code is <code>VN0547</code>.</td>
+                <td>
+                    - <strong>Object</strong>: Quote Line<br>
+                    - <strong>Field</strong>: Product Code<br>
+                    - <strong>Operator</strong>: Equals<br>
+                    - <strong>Filter Value</strong>: VN0547
+                </td>
+            </tr>
+            <tr>
+                <td>4. Add Condition 2</td>
+                <td>Check if count of <code>CAP136</code> is greater than 0.</td>
+                <td>
+                    - <strong>Tested Variable</strong>: Count_CAP136<br>
+                    - <strong>Operator</strong>: Greater Than<br>
+                    - <strong>Filter Value</strong>: 0
+                </td>
+            </tr>
+            <tr>
+                <td>5. Add Price Action</td>
+                <td>Update <code>Product_Notes__c</code> field on the Quote Line for <code>VN0547</code>.</td>
+                <td>
+                    - <strong>Target Object</strong>: Quote Line<br>
+                    - <strong>Target Field</strong>: Product_Notes__c<br>
+                    - <strong>Value</strong>: Apple
+                </td>
+            </tr>
+            <tr>
+                <td>6. Test Configuration</td>
+                <td>Add products <code>VN0547</code> and <code>CAP136</code> to a Quote.</td>
+                <td>
+                    - Verify that the <code>Product_Notes__c</code> field on the Quote Line for <code>VN0547</code> is updated to "Apple" when both products are present.
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
